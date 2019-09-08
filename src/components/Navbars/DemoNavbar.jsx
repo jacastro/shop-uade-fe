@@ -190,7 +190,7 @@ const SiteNavbar = () => {
                         Mis ventas
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem onClick={() => SSO.logout()} tag={Link}>
+                      <DropdownItem onClick={() => SSO.logout(window.location.href)} tag={Link}>
                         Cerrar sesión
                       </DropdownItem>
                     </DropdownMenu>
@@ -201,7 +201,7 @@ const SiteNavbar = () => {
                       className="btn-neutral btn-icon"
                       color="default"
                       target="_blank"
-                      onClick={() => SSO.login()}
+                      onClick={() => SSO.login(window.location.href)}
                     >
                       <span className="nav-link-inner--text ml-1">
                         Iniciar sesión

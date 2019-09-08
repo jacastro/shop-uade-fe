@@ -516,9 +516,9 @@ function SSOAuth(info) {
   this.info = info;
 }
 
-SSOAuth.prototype.login = function() {
+SSOAuth.prototype.login = function(url) {
   window.location.replace(
-    _getLoginUrl(this.info.tenantId, this.info.loginCallback)
+    _getLoginUrl(this.info.tenantId, url || this.info.loginCallback)
   );
 };
 
@@ -539,11 +539,11 @@ SSOAuth.prototype.getUserId = function() {
   return jwtData.sub;
 };
 
-SSOAuth.prototype.logout = function() {
+SSOAuth.prototype.logout = function(url) {
   lscache.remove(LOCALSTORAGE_USER_KEY);
   lscache.remove(LOCALSTORAGE_TOKEN_KEY);
   window.location.replace(
-    _getLogoutUrl(this.info.tenantId, this.info.logoutCallback)
+    _getLogoutUrl(this.info.tenantId, url || this.info.logoutCallback)
   );
 };
 

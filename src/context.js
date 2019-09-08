@@ -3,13 +3,13 @@ import SSOAuth from "./lib/sso";
 
 export const ShopContext = React.createContext({});
 
-const SSO = new SSOAuth({
-  tenantId: '380f7247-c8e7-4036-b81f-29e2d7a6282f',
-  loginCallback: window.location.href,
-  logoutCallback: window.location.href,
-});
-
 export const ContextProvider = ({ children }) => {
+  const SSO = new SSOAuth({
+    tenantId: '380f7247-c8e7-4036-b81f-29e2d7a6282f',
+    loginCallback: window.location.href,
+    logoutCallback: window.location.href,
+  });
+
   const value = {
     SSO,
     user: null,
