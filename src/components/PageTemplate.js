@@ -31,11 +31,13 @@ class PageTemplate extends React.Component {
     this.refs.main.scrollTop = 0;
   }
   render() {
+    const { card, children, title } = this.props;
+
     return (
       <React.Fragment>
         <DemoNavbar />
         <main className="profile-page" ref="main">
-          <section className="section-profile-cover section-shaped my-0">
+          <section className={`${card ? 'section-profile-cover ' : ''}section-shaped my-0`}>
             {/* Circles background */}
             <div className="shape shape-style-1 shape-default alpha-4">
               <span />
@@ -47,6 +49,13 @@ class PageTemplate extends React.Component {
               <span />
             </div>
             {/* SVG separator */}
+            {title && (
+              <Container className="py-lg-md d-flex">
+                <h1 className="display-1 text-white" style={{ marginTop: "1em" }}>
+                  {title}
+                </h1>
+              </Container>
+            )}
             <div className="separator separator-bottom separator-skew">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,9 +74,11 @@ class PageTemplate extends React.Component {
           </section>
           <section className="section">
             <Container>
-              <Card className="card-profile shadow mt--300">
-                {this.props.children}
-              </Card>
+              {card ? (
+                <Card className="card-profile shadow mt--300">
+                  {children}
+                </Card>
+              ) : children}
             </Container>
           </section>
         </main>

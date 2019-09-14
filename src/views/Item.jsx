@@ -73,7 +73,7 @@ Resistencia al agua y al polvo IP67
     }
 
     return (
-      <PageTemplate>
+      <PageTemplate card>
         <Row>
           <Col xs="7" className="item-view_images">
             <img
