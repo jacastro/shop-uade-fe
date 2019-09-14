@@ -31,6 +31,7 @@ import Register from "views/examples/Register.jsx";
 import Item from "views/Item";
 import { ContextProvider } from "context";
 import ItemList from "views/ItemList";
+import Checkout from "views/Checkout";
 
 ReactDOM.render(
   <ContextProvider>
@@ -59,7 +60,7 @@ ReactDOM.render(
           render={props => <Item {...props} />}
         />
         <Route
-          path="/list/"
+          path="/list"
           exact
           render={props => <ItemList {...props} />}
         />
@@ -67,6 +68,11 @@ ReactDOM.render(
           path="/search/:searchText"
           exact
           render={props => <ItemList search {...props} />}
+        />
+        <Route
+          path="/checkout"
+          exact
+          render={props => <Checkout {...props} />}
         />
         <Redirect to="/" />
       </Switch>

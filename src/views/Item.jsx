@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import { Button, Card, Container, Row, Col, DropdownToggle,
@@ -58,6 +59,7 @@ Resistencia al agua y al polvo IP67
       weight: "",
       warranty: "",
       quantity: 1,
+      shippingTo: null,
     };
   }
 
@@ -65,11 +67,16 @@ Resistencia al agua y al polvo IP67
   }
 
   render() {
-    const { id, title, price, description, quantity, photos } = this.state;
+    const { id, title, price, description, quantity, photos, shippingTo } = this.state;
     const quantityAvailable = [];
+    const adressAvailable = [];
 
     for (let index = 1; index < 10; index++) {
       quantityAvailable.push(index);
+    }
+
+    for (let index = 1; index < 5; index++) {
+      adressAvailable.push(index);
     }
 
     return (
@@ -85,10 +92,26 @@ Resistencia al agua y al polvo IP67
           <Col xs="5" className="item-view_detail">
             <span>ID #{id}</span>
             <h2>{title}</h2>
-            <h1 className="display-1">$ {price}</h1>
+            <h1 className="display-1">$ {price}{shippingTo && <small> + $350</small>}</h1>
             <p>{description}</p>
             <UncontrolledDropdown group>
-              <DropdownToggle outline size="lg" caret color="secondary">
+              <DropdownToggle outline caret color="secondary">
+                {shippingTo ? `Quiero que me lo envíen a ${shippingTo}` : "Lo retiro personalmente en el local"}
+              </DropdownToggle>
+              <DropdownMenu>
+                {adressAvailable.map(adress => (
+                  <DropdownItem onClick={() => this.setState({ shippingTo: adress })}>
+                    Quiero que me lo envíen a {adress}
+                  </DropdownItem>
+                ))}
+                <DropdownItem onClick={() => this.setState({ shippingTo: null })}>
+                  Lo retiro personalmente en el local
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <br /><br />
+            <UncontrolledDropdown group>
+              <DropdownToggle outline size="lg" caret color="default">
                 Necesito {quantity} {quantity === 1 ? "unidad" : "unidades"}
               </DropdownToggle>
               <DropdownMenu>
@@ -99,7 +122,16 @@ Resistencia al agua y al polvo IP67
                 ))}
               </DropdownMenu>
             </UncontrolledDropdown>
-            <Button color="success" type="button" size="lg" className="buy">
+            <Button 
+              color="success"
+              size="lg"
+              className="buy"
+              to={{
+                pathname:`/checkout`,
+                state: {...this.state},
+              }}
+              tag={Link}
+            >
               Comprar ahora
             </Button>
           </Col>
