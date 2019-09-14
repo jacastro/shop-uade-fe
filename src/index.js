@@ -30,6 +30,7 @@ import Profile from "views/examples/Profile.jsx";
 import Register from "views/examples/Register.jsx";
 import Item from "views/Item";
 import { ContextProvider } from "context";
+import ItemList from "views/ItemList";
 
 ReactDOM.render(
   <ContextProvider>
@@ -56,6 +57,11 @@ ReactDOM.render(
           path="/item/:itemId"
           exact
           render={props => <Item {...props} />}
+        />
+        <Route
+          path="/list/"
+          exact
+          render={props => <ItemList {...props} />}
         />
         <Redirect to="/" />
       </Switch>
