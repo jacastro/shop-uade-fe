@@ -28,6 +28,7 @@ import Landing from "views/examples/Landing.jsx";
 import Login from "views/examples/Login.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Register from "views/examples/Register.jsx";
+import Item from "views/Item";
 import { ContextProvider } from "context";
 
 ReactDOM.render(
@@ -50,6 +51,11 @@ ReactDOM.render(
           path="/register-page"
           exact
           render={props => <Register {...props} />}
+        />
+        <Route
+          path="/item/:itemId"
+          exact
+          render={props => <Item {...props} />}
         />
         <Redirect to="/" />
       </Switch>
