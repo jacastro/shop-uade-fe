@@ -106,3 +106,31 @@
 
 // Shop UADE
 @import "item-view.scss";
+
+.shop-uade-logo {
+  i {
+    font-size: 48px
+  }
+  span {
+    display: inline-block;
+    float: right;
+    margin: 8px 0 0 8px;
+    font-size: 24px;
+    font-weight: 300;
+  }
+}
+
+.search-box {
+  margin: 0;
+  width: 580px;
+
+  .form-control, .input-group-text {
+    background-color: rgba(255,255,255,0.8)
+  }
+
+  .input-group:focus {
+    .form-control, .input-group-text {
+      background-color: rgba(255,255,255,1)
+    }
+  }
+}

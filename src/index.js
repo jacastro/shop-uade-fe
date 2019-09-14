@@ -63,6 +63,11 @@ ReactDOM.render(
           exact
           render={props => <ItemList {...props} />}
         />
+        <Route
+          path="/search/:searchText"
+          exact
+          render={props => <ItemList search {...props} />}
+        />
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

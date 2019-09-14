@@ -54,9 +54,12 @@ class ItemList extends React.Component {
 
   render() {
     const { items } = this.state;
-    
+    const { match, search } = this.props;
+
+    const title = search ? `Resultados de la búsqueda: ${match.params.searchText}` : "Listado de productos";
+
     return (
-      <PageTemplate title="Listado de productos">
+      <PageTemplate title={title}>
         <Row>
           {items.map(item => {
             return (
