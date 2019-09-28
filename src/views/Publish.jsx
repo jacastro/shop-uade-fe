@@ -36,7 +36,7 @@ import Warranty from "services/Warranty";
 import Item from "services/Item";
 import { ShopContext } from "context";
 
-const Publish = ({  }) => {
+const Publish = () => {
   const { userId } = useContext(ShopContext);
   const [values, setValues] = useState({
     name: '',
@@ -64,7 +64,6 @@ const Publish = ({  }) => {
   const onPublish = () => {
     setPublishing(true)
     Item.publish(values).then(response => {
-      console.log(response);
       setPublishing(false)
     })
   }
