@@ -44,7 +44,7 @@ import { ShopContext } from "context";
 import Category from "services/Category";
 
 const SiteNavbar = (props) => {
-  const { user, SSO } = useContext(ShopContext);
+  const { user, userId, SSO } = useContext(ShopContext);
   const [search, setSearch] = useState(props.match.params.searchText || '');
   const [categories, setCategories] = useState([]);
 
@@ -127,7 +127,7 @@ const SiteNavbar = (props) => {
                   </DropdownToggle>
                   <DropdownMenu>
                     {categories.map(category => (
-                      <DropdownItem to="/landing-page" tag={Link}>
+                      <DropdownItem to={`/category/${category}`} tag={Link}>
                         {category}
                       </DropdownItem>
                     ))}
@@ -140,6 +140,10 @@ const SiteNavbar = (props) => {
                       <span className="nav-link-inner--text">{user.fullName}</span>
                     </DropdownToggle>
                     <DropdownMenu>
+                      <DropdownItem to="/publish" tag={Link}>
+                        Publicar un producto
+                      </DropdownItem>
+                      <DropdownItem divider />
                       <DropdownItem to="/landing-page" tag={Link}>
                         Mi perfil
                       </DropdownItem>
@@ -156,6 +160,7 @@ const SiteNavbar = (props) => {
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 ) : (
+                  userId == null &&
                   <NavItem className="d-none d-lg-block ml-lg-4">
                     <Button
                       className="btn-neutral btn-icon"

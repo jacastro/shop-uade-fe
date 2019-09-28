@@ -30,6 +30,7 @@ import Item from "views/Item";
 import { ContextProvider } from "context";
 import ItemList from "views/ItemList";
 import Checkout from "views/Checkout";
+import Publish from "views/Publish";
 
 ReactDOM.render(
   <ContextProvider>
@@ -51,6 +52,11 @@ ReactDOM.render(
           render={props => <Profile {...props} />}
         />
         <Route
+          path="/publish"
+          exact
+          render={props => <Publish {...props} />}
+        />
+        <Route
           path="/item/:itemId"
           exact
           render={props => <Item {...props} />}
@@ -59,6 +65,11 @@ ReactDOM.render(
           path="/list"
           exact
           render={props => <ItemList {...props} />}
+        />
+        <Route
+          path="/category/:category"
+          exact
+          render={props => <ItemList search {...props} />}
         />
         <Route
           path="/search/:searchText"

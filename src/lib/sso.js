@@ -535,7 +535,7 @@ SSOAuth.prototype.getJWTData = function() {
 };
 
 SSOAuth.prototype.getUserId = function() {
-  var jwtData = this.getJWTData();
+  var jwtData = this.getJWTData() || {};
   return jwtData.sub;
 };
 

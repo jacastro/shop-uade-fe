@@ -17,6 +17,8 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import Items from "services/Item";
+import Warranty from "services/Warranty";
 
 // reactstrap components
 import { Button, Card, CardBody, Row, Col, Badge,
@@ -31,32 +33,45 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props);
 
-    const items = [];
-
-    for (let index = 1; index < 49; index++) {
-      items.push({
-        id: index,
-        title: "iPhone 8 plus libre 64 GB",
-        price: "35.000",
-        photos: [
-          "https://http2.mlstatic.com/D_NQ_NP_2X_761686-MLA31003080334_062019-F.webp"
-        ],
-      });
-    }
-
     this.state = {
-      items,
+      items: [],
+      title: 'Buscando productos...'
     };
+
+    this.searchItems = this.searchItems.bind(this);
   }
 
   componentDidMount() {
+    this.searchItems(this.props)
+  }
+
+  componentWillReceiveProps(props) {
+    this.searchItems(props)
+  }
+
+  searchItems(props) {
+    const { search, match } = props;
+    const { searchText, category } = match.params;
+    this.setState({ title: 'Buscando productos...' });
+    if (category) {
+      Items.category(search && category).then(({ data }) => 
+        this.setState({ 
+          items: data,
+          title: `Todos los ${category}`
+        })
+      );
+    } else {
+      Items.search(search && searchText).then(({ data }) => 
+        this.setState({
+          items: data,
+          title: search ? `Resultados de la búsqueda: ${searchText}` : 'Listado de productos'
+        })
+      );
+    }
   }
 
   render() {
-    const { items } = this.state;
-    const { match, search } = this.props;
-
-    const title = search ? `Resultados de la búsqueda: ${match.params.searchText}` : "Listado de productos";
+    const { items, title } = this.state;
 
     return (
       <PageTemplate title={title}>
@@ -73,18 +88,15 @@ class ItemList extends React.Component {
                       src={item.photos[0]}
                     />
                     <h6 className="text-primary text-uppercase">
-                      {item.title}
+                      {item.name}
                     </h6>
                     <h3 className="display-3">$ {item.price}</h3>
                     <div>
                       <Badge color="primary" pill className="mr-1">
-                        design
+                        {item.category}
                       </Badge>
-                      <Badge color="primary" pill className="mr-1">
-                        system
-                      </Badge>
-                      <Badge color="primary" pill className="mr-1">
-                        creative
+                      <Badge color="info" pill className="mr-1">
+                        {Warranty.getName(item.warranty)}
                       </Badge>
                     </div>
                     <Button

@@ -11,11 +11,12 @@ export const ContextProvider = ({ children }) => {
     logoutCallback: window.location.href,
   });
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState()
 
   const value = {
     SSO,
     user,
+    userId: SSO.getUserId(),
   };
 
   if(window.location.hash !== '')
