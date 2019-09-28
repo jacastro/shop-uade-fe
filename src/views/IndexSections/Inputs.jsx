@@ -34,7 +34,7 @@ class Inputs extends React.Component {
   state = {};
   render() {
     return (
-      <>
+      <React.Fragment>
         <section className="section pb-0 section-components">
           <Container className="mb-5">
             {/* Inputs */}
@@ -201,7 +201,7 @@ class Inputs extends React.Component {
             </Container>
           </div>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

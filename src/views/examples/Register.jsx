@@ -46,7 +46,7 @@ class Register extends React.Component {
   }
   render() {
     return (
-      <>
+      <React.Fragment>
         <DemoNavbar />
         <main ref="main">
           <section className="section section-shaped section-lg">
@@ -189,7 +189,7 @@ class Register extends React.Component {
           </section>
         </main>
         <SimpleFooter />
-      </>
+      </React.Fragment>
     );
   }
 }

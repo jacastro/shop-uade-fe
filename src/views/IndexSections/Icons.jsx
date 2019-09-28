@@ -23,7 +23,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 class Icons extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <section className="section section-lg section-nucleo-icons pb-250">
           <Container>
             <Row className="justify-content-center">
@@ -77,7 +77,7 @@ class Icons extends React.Component {
             </div>
           </Container>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

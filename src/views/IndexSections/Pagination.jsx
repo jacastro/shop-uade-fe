@@ -23,7 +23,7 @@ import { Pagination, PaginationItem, PaginationLink, Col } from "reactstrap";
 class PaginationSection extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <Col lg="5">
           <h3 className="h4 text-success font-weight-bold mb-5">Pagination</h3>
           <nav aria-label="Page navigation example" className="mb-4">
@@ -95,7 +95,7 @@ class PaginationSection extends React.Component {
             </Pagination>
           </nav>
         </Col>
-      </>
+      </React.Fragment>
     );
   }
 }

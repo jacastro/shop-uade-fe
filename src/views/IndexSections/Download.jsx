@@ -24,7 +24,7 @@ import { Button, Container, Row, Col, UncontrolledTooltip } from "reactstrap";
 class Download extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <section className="section section-lg">
           <Container>
             <Row className="row-grid justify-content-center">
@@ -159,7 +159,7 @@ class Download extends React.Component {
             </Row>
           </Container>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

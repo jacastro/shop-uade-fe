@@ -38,7 +38,7 @@ const items = [
 class Carousel extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <section className="section section-shaped">
           <div className="shape shape-style-1 shape-default">
             <span />
@@ -88,7 +88,7 @@ class Carousel extends React.Component {
             </svg>
           </div>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

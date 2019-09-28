@@ -44,7 +44,7 @@ class Modals extends React.Component {
   };
   render() {
     return (
-      <>
+      <React.Fragment>
         <h2 className="mt-lg mb-5">
           <span>Javascript Components</span>
         </h2>
@@ -289,7 +289,7 @@ class Modals extends React.Component {
             </Modal>
           </Col>
         </Row>
-      </>
+      </React.Fragment>
     );
   }
 }

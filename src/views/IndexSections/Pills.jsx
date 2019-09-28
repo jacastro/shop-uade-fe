@@ -33,7 +33,7 @@ class Index extends React.Component {
   };
   render() {
     return (
-      <>
+      <React.Fragment>
         <Col lg="5">
           <h3 className="h4 text-success font-weight-bold mb-5">
             Navigation Pills
@@ -86,7 +86,7 @@ class Index extends React.Component {
             </NavItem>
           </Nav>
         </Col>
-      </>
+      </React.Fragment>
     );
   }
 }

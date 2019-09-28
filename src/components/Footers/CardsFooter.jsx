@@ -35,7 +35,7 @@ import {
 class CardsFooter extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <footer className="footer has-cards">
           <Container className="container-lg">
             <Row>
@@ -179,7 +179,7 @@ class CardsFooter extends React.Component {
             </Row>
           </Container>
         </footer>
-      </>
+      </React.Fragment>
     );
   }
 }

@@ -58,7 +58,7 @@ class CustomControls extends React.Component {
   }
   render() {
     return (
-      <>
+      <React.Fragment>
         <Row>
           <Col lg="3" md="6">
             {/* Checkboxes */}
@@ -217,7 +217,7 @@ class CustomControls extends React.Component {
             </div>
           </Col>
         </Row>
-      </>
+      </React.Fragment>
     );
   }
 }

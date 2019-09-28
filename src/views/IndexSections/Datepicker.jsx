@@ -86,7 +86,7 @@ class Datepicker extends React.Component {
   };
   render() {
     return (
-      <>
+      <React.Fragment>
         <h3 className="h4 text-success font-weight-bold mt-md mb-4">
           Datepicker
         </h3>
@@ -184,7 +184,7 @@ class Datepicker extends React.Component {
             </Row>
           </Col>
         </Row>
-      </>
+      </React.Fragment>
     );
   }
 }

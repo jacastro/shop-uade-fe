@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import SSOAuth from "./lib/sso";
+import User from "services/User";
 
 export const ShopContext = React.createContext({});
 
@@ -10,18 +11,20 @@ export const ContextProvider = ({ children }) => {
     logoutCallback: window.location.href,
   });
 
+  const [user, setUser] = useState(null)
+
   const value = {
     SSO,
-    user: null,
+    user,
   };
 
   if(window.location.hash !== '')
     SSO.saveUserToken();
 
-  try {
-    value.user = SSO.getJWTData();
-  } catch (error) {
-    
+  if (user == null) {
+    User.getUserData(SSO.getJWT()).then(({ data }) => {
+      setUser(data)
+    })
   }
 
   return (

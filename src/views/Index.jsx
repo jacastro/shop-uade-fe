@@ -54,7 +54,7 @@ class Index extends React.Component {
   }
   render() {
     return (
-      <>
+      <React.Fragment>
         <DemoNavbar />
         <main ref="main">
           <Hero />
@@ -91,7 +91,7 @@ class Index extends React.Component {
           <Download />
         </main>
         <CardsFooter />
-      </>
+      </React.Fragment>
     );
   }
 }

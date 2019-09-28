@@ -38,7 +38,7 @@ import {
 class Menus extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <Row className="justify-content-center mt-md">
           <Col lg="12">
             {/* Menu */}
@@ -237,7 +237,7 @@ class Menus extends React.Component {
             </Row>
           </Col>
         </Row>
-      </>
+      </React.Fragment>
     );
   }
 }

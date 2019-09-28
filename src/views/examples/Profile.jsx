@@ -32,7 +32,7 @@ class Profile extends React.Component {
   }
   render() {
     return (
-      <>
+      <React.Fragment>
         <DemoNavbar />
         <main className="profile-page" ref="main">
           <section className="section-profile-cover section-shaped my-0">
@@ -161,7 +161,7 @@ class Profile extends React.Component {
           </section>
         </main>
         <SimpleFooter />
-      </>
+      </React.Fragment>
     );
   }
 }

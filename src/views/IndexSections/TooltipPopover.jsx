@@ -31,7 +31,7 @@ import {
 class TooltipPopover extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <h3 className="h4 text-success font-weight-bold mt-md mb-4">
           Tooltips &amp; Popovers
         </h3>
@@ -163,7 +163,7 @@ class TooltipPopover extends React.Component {
             </UncontrolledPopover>
           </Col>
         </Row>
-      </>
+      </React.Fragment>
     );
   }
 }

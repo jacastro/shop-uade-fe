@@ -38,7 +38,7 @@ import {
 class Navbars extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <section>
           <Container>
             {/* Navigation */}
@@ -508,7 +508,7 @@ class Navbars extends React.Component {
             </Container>
           </Navbar>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

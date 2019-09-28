@@ -41,7 +41,7 @@ class Login extends React.Component {
   state = {};
   render() {
     return (
-      <>
+      <React.Fragment>
         <section className="section section-lg section-shaped">
           <div className="shape shape-style-1 shape-default">
             <span />
@@ -214,7 +214,7 @@ class Login extends React.Component {
             </svg>
           </div>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

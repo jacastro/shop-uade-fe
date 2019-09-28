@@ -23,7 +23,7 @@ import { Progress, Col } from "reactstrap";
 class ProgressSection extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <Col lg="5">
           <h3 className="h4 text-success font-weight-bold mb-4">
             Progress bars
@@ -51,7 +51,7 @@ class ProgressSection extends React.Component {
             <Progress max="100" value="60" />
           </div>
         </Col>
-      </>
+      </React.Fragment>
     );
   }
 }

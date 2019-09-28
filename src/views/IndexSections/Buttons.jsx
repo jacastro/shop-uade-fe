@@ -23,7 +23,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 class BasicElements extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <section
           className="section section-components pb-0"
           id="section-components"
@@ -210,7 +210,7 @@ class BasicElements extends React.Component {
             </Row>
           </Container>
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

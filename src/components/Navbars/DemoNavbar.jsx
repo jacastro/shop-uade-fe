@@ -41,15 +41,20 @@ import {
   Col,
 } from "reactstrap";
 import { ShopContext } from "context";
+import Category from "services/Category";
 
 const SiteNavbar = (props) => {
   const { user, SSO } = useContext(ShopContext);
   const [search, setSearch] = useState(props.match.params.searchText || '');
+  const [categories, setCategories] = useState([]);
 
   useEffect(
     () => {
       let headroom = new Headroom(document.getElementById("navbar-main"));
       headroom.init();
+      Category.list().then(({ data }) => {
+        setCategories(data);
+      });
     },
     [],
   );
@@ -121,25 +126,18 @@ const SiteNavbar = (props) => {
                     <span className="nav-link-inner--text">Categorías</span>
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem to="/landing-page" tag={Link}>
-                      Landing
-                    </DropdownItem>
-                    <DropdownItem to="/profile-page" tag={Link}>
-                      Profile
-                    </DropdownItem>
-                    <DropdownItem to="/login-page" tag={Link}>
-                      Login
-                    </DropdownItem>
-                    <DropdownItem to="/register-page" tag={Link}>
-                      Register
-                    </DropdownItem>
+                    {categories.map(category => (
+                      <DropdownItem to="/landing-page" tag={Link}>
+                        {category}
+                      </DropdownItem>
+                    ))}
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 {user ? (
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav>
-                      <i className="ni ni-circle-08 d-lg-none mr-1" />
-                      <span className="nav-link-inner--text">{user.iss}</span>
+                      <i className="ni ni-circle-08 mr-1" />
+                      <span className="nav-link-inner--text">{user.fullName}</span>
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem to="/landing-page" tag={Link}>

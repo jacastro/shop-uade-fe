@@ -23,7 +23,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 class Hero extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <div className="position-relative">
           {/* Hero for FREE version */}
           <section className="section section-lg section-hero section-shaped">
@@ -115,7 +115,7 @@ class Hero extends React.Component {
             </div>
           </section>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
