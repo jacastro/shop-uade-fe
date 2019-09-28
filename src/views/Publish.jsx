@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 // reactstrap components
@@ -34,8 +34,10 @@ import PageTemplate from "components/PageTemplate";
 import Category from "services/Category";
 import Warranty from "services/Warranty";
 import Item from "services/Item";
+import { ShopContext } from "context";
 
 const Publish = ({  }) => {
+  const { userId } = useContext(ShopContext);
   const [values, setValues] = useState({
     name: '',
     description: '',
@@ -44,6 +46,9 @@ const Publish = ({  }) => {
     weight: 0,
     category: null,
     warranty: null,
+    seller: {
+      id: userId
+    }
   });
   const [categories, setCategories] = useState([]);
   const [warranties, setWarranties] = useState([]);
