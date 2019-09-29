@@ -1,0 +1,151 @@
+// Tables
+
+$table-cell-padding:          1rem !default;
+$table-cell-padding-sm:       .5rem !default;
+
+$table-bg:                    transparent !default;
+$table-accent-bg:             rgba($black, .05) !default;
+$table-hover-bg:              $gray-100 !default;
+$table-active-bg:             $table-hover-bg !default;
+
+$table-border-width:          $border-width !default;
+$table-border-color:          $gray-200 !default;
+
+$table-head-bg:               $gray-100 !default;
+$table-head-color:            $gray-600 !default;
+$table-head-spacer-y:         .75rem !default;
+
+$table-head-font-size:        .65rem !default;
+$table-head-font-weight:      $font-weight-bold !default;
+$table-head-text-transform:   uppercase !default;
+$table-head-letter-spacing:   1px !default;
+
+$table-body-font-size:        .8125rem !default;
+
+$table-dark-bg:               theme-color("default") !default;
+$table-dark-accent-bg:        rgba($white, .05) !default;
+$table-dark-hover-bg:         rgba($white, .075) !default;
+$table-dark-border-color:     lighten(theme-color("default"), 7%) !default;
+$table-dark-color:            $body-bg !default;
+
+$table-dark-head-bg:          lighten(theme-color("default"), 4%) !default;
+$table-dark-head-color:       lighten(theme-color("default"), 35%) !default;
+
+//
+// Table
+//
+
+
+// General styles
+
+.table {
+  thead th {
+      padding-top: $table-head-spacer-y;
+      padding-bottom: $table-head-spacer-y;
+      font-size: $table-head-font-size;
+      text-transform: $table-head-text-transform;
+      letter-spacing: $table-head-letter-spacing;
+      border-bottom: $table-border-width solid $table-border-color;
+  }
+
+  th {
+      font-weight: $table-head-font-weight;
+  }
+
+  td {
+      .progress {
+          height: 3px;
+          width: 120px;
+          margin: 0;
+      }
+  }
+
+  td,
+  th {
+      font-size: $table-body-font-size;
+      white-space: nowrap;
+  }
+
+
+  // Vetical align table content
+
+  &.align-items-center {
+      td,
+      th {
+          vertical-align: middle;
+      }
+  }
+
+
+ // Styles for dark table
+
+ .thead-dark {
+      th {
+          background-color: $table-dark-head-bg;
+          color: $table-dark-head-color;
+      }
+  }
+
+
+  // Styles for light table
+
+  .thead-light {
+      th {
+          background-color: $table-head-bg;
+          color: $table-head-color;
+      }
+  }
+}
+
+
+// Add transition for hover state
+
+.table-hover {
+  tr {
+      @include transition($transition-base);
+  }
+}
+
+
+// Flush tables
+
+.table-flush {
+  td,
+  th {
+      border-left: 0;
+      border-right: 0;
+  }
+
+  tbody {
+      tr {
+          &:first-child {
+              td,
+              th {
+                  border-top: 0;
+              }
+          }
+
+          &:last-child {
+              td,
+              th {
+                  border-bottom: 0;
+              }
+          }
+      }
+  }
+}
+
+
+// Tables inside cards
+
+.card {
+  .table {
+      margin-bottom: 0;
+
+      td,
+      th {
+          padding-left: $card-spacer-x;
+          padding-right: $card-spacer-x;
+      }
+  }
+}

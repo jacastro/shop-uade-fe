@@ -11,12 +11,13 @@ export const ContextProvider = ({ children }) => {
     logoutCallback: window.location.href,
   });
 
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
+  const [userId, setUserId] = useState(SSO.getUserId());
 
   const value = {
     SSO,
     user,
-    userId: SSO.getUserId(),
+    userId,
   };
 
   if(window.location.hash !== '')
@@ -25,6 +26,8 @@ export const ContextProvider = ({ children }) => {
   if (user == null) {
     User.getUserData(SSO.getJWT()).then(({ data }) => {
       setUser(data)
+    }).catch(() => {
+      setUserId(null);
     })
   }
 

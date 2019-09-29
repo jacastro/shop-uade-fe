@@ -153,6 +153,9 @@ const SiteNavbar = (props) => {
                       <DropdownItem to="/login-page" tag={Link}>
                         Mis ventas
                       </DropdownItem>
+                      <DropdownItem to="/profile/items" tag={Link}>
+                        Mis publicaciones
+                      </DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={() => SSO.logout(window.location.href)} tag={Link}>
                         Cerrar sesión
