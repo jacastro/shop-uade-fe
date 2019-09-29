@@ -103,7 +103,10 @@ class ItemList extends React.Component {
                       className="mt-4"
                       color="primary"
                       block
-                      to={`/item/${item.id}`}
+                      to={{
+                        pathname:`/item/${item.id}`,
+                        state: {...item},
+                      }}
                       tag={Link}
                     >
                       Ver producto

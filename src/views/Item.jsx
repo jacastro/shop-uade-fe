@@ -19,7 +19,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // reactstrap components
-import { Button, Card, Container, Row, Col, DropdownToggle,
+import { Button, Badge, Container, Row, Col, DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown } from "reactstrap";
@@ -27,47 +27,30 @@ import { Button, Card, Container, Row, Col, DropdownToggle,
 // core components
 import PageTemplate from "components/PageTemplate";
 
-class Item extends React.Component {
+import Item from "services/Item";
+import Warranty from "services/Warranty";
+
+class ItemView extends React.Component {
   constructor(props) {
     super(props);
+    const item = props.location.state || {};
     this.state = {
       id: props.match.params.itemId,
-      title: "iPhone 8 plus libre 64 GB",
-      description: `
-Liberado
-Procesador Apple A11 Bionic (10 nm) - 3 GB
-Pantalla 5.5" IPS LCD de 1080 x 1920 pixeles
-Cámara trasera doble 12MP f/1.8 (wide) - 12MP f/2.8 (tele)
-Cámara delantera 7MP f/2.2
-Bateria 2691 mAh con cárga inalámbrica
-Resistencia al agua y al polvo IP67
-      `,
-      price: "35.000",
-      seller: "",
-      category: [{
-        id: "",
-        name: "",
-      }],
-      attributes:[{
-        id: "",
-        name: "",
-      }],
-      photos: [
-        "https://http2.mlstatic.com/D_NQ_NP_2X_761686-MLA31003080334_062019-F.webp"
-      ],
-      url: "",
-      weight: "",
-      warranty: "",
       quantity: 1,
       shippingTo: null,
+      photos: [],
+      ...item,
     };
   }
 
   componentDidMount() {
+    Item.byId(this.state.id).then(({ data }) => {
+      this.setState({ ...data })
+    })
   }
 
   render() {
-    const { id, title, price, description, quantity, photos, shippingTo } = this.state;
+    const { id, name, price, description, quantity, photos, shippingTo, category, warranty } = this.state;
     const quantityAvailable = [];
     const adressAvailable = [];
 
@@ -91,9 +74,15 @@ Resistencia al agua y al polvo IP67
           </Col>
           <Col xs="5" className="item-view_detail">
             <span>ID #{id}</span>
-            <h2>{title}</h2>
+            <h2>{name}</h2>
             <h1 className="display-1">$ {price}{shippingTo && <small> + $350</small>}</h1>
-            <p>{description}</p>
+            <Badge tag={Link} to={`/category/${category}`} color="primary" pill className="mr-1">
+              {category}
+            </Badge>
+            <Badge color="info" pill className="mr-1">
+              {Warranty.getName(warranty)}
+            </Badge>
+            <p className="mt-3">{description}</p>
             <UncontrolledDropdown group>
               <DropdownToggle outline caret color="secondary">
                 {shippingTo ? `Quiero que me lo envíen a ${shippingTo}` : "Lo retiro personalmente en el local"}
@@ -141,4 +130,4 @@ Resistencia al agua y al polvo IP67
   }
 }
 
-export default Item;
+export default ItemView;

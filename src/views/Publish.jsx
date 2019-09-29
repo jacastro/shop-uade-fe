@@ -36,9 +36,10 @@ import Warranty from "services/Warranty";
 import Item from "services/Item";
 import { ShopContext } from "context";
 
-const Publish = () => {
+const Publish = ({ location }) => {
+  const originalItem = location.state;
   const { userId } = useContext(ShopContext);
-  const [values, setValues] = useState({
+  const [values, setValues] = useState(originalItem || {
     name: '',
     description: '',
     photos: [],
@@ -53,6 +54,7 @@ const Publish = () => {
   const [categories, setCategories] = useState([]);
   const [warranties, setWarranties] = useState([]);
   const [publishing, setPublishing] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const changeValue = (key, value) => {
     setValues({
@@ -64,7 +66,16 @@ const Publish = () => {
   const onPublish = () => {
     setPublishing(true)
     Item.publish(values).then(response => {
-      setPublishing(false)
+      setPublishing(false);
+      setRedirect(true);
+    })
+  }
+
+  const onEdit = () => {
+    setPublishing(true)
+    Item.edit(values).then(response => {
+      setPublishing(false);
+      setRedirect(true);
     })
   }
 
@@ -80,10 +91,14 @@ const Publish = () => {
     [],
   );
 
+  if(redirect) {
+    return <Redirect to="/profile/items" />
+  }
+
   return (
     <PageTemplate card>
       <div className="pt-3 p-5">
-        <h2>Publicar un producto</h2>
+        <h2>{originalItem ? 'Editar tu publicacion' : 'Publicar un producto'}</h2>
         <FormGroup>
           <Input
             placeholder="Nombre del producto"
@@ -148,9 +163,15 @@ const Publish = () => {
         </UncontrolledDropdown>
         <br />
         <br />
-        <Button color="primary" type="button" disabled={publishing} onClick={() => onPublish()}>
-          {publishing ? 'Publicando...' : 'Publicar'}
-        </Button>
+        {originalItem ? (
+          <Button color="primary" type="button" disabled={publishing} onClick={() => onEdit()}>
+            {publishing ? 'Guardando...' : 'Confirmar cambios'}
+          </Button>
+        ) : (
+          <Button color="primary" type="button" disabled={publishing} onClick={() => onPublish()}>
+            {publishing ? 'Publicando...' : 'Publicar'}
+          </Button>
+        )}
       </div>
     </PageTemplate>
   )

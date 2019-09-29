@@ -1,4 +1,4 @@
-import { get, post } from "services";
+import { get, post, put } from "services";
 
 class Item {
   static list() {
@@ -13,8 +13,20 @@ class Item {
     return get(`/items/category/${text}`);
   }
 
+  static bySeller(sellerId) {
+    return get(`/items/seller/${sellerId}`);
+  }
+
+  static byId(itemId) {
+    return get(`/items/${itemId}`);
+  }
+
   static publish(values) {
     return post('/items/', values);
+  }
+
+  static edit(values) {
+    return put('/items/', values);
   }
 }
 
