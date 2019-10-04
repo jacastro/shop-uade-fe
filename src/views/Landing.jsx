@@ -38,7 +38,7 @@ import {
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
-import CardsFooter from "components/Footers/CardsFooter.jsx";
+import CardsFooter from "components/Footers/SimpleFooter";
 
 // index page sections
 import Download from "./IndexSections/Download.jsx";

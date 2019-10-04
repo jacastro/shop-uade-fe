@@ -32,6 +32,7 @@ import ItemList from "views/ItemList";
 import Checkout from "views/Checkout";
 import Publish from "views/Publish";
 import MyItems from "views/MyItems";
+import AddressView from "views/Address";
 
 ReactDOM.render(
   <ContextProvider>
@@ -51,6 +52,11 @@ ReactDOM.render(
           path="/profile/items"
           exact
           render={props => <MyItems {...props} />}
+        />
+        <Route
+          path="/profile/address"
+          exact
+          render={props => <AddressView {...props} />}
         />
         <Route
           path="/profile"

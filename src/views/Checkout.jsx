@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 // reactstrap components
@@ -26,9 +26,29 @@ import { Spinner, Card, Container, Row, Col, DropdownToggle,
 
 // core components
 import PageTemplate from "components/PageTemplate";
+import { ShopContext } from "context";
+import Order from "services/Order";
 
 const Checkout = ({ location }) => {
   const item = location.state;
+  const { userId } = useContext(ShopContext);
+
+  useEffect(
+    () => {
+      const data = {
+        address: item.shippingTo ? item.shippingTo.id : null,
+        buyerId: userId,
+        itemId: item.id,
+        quantity: item.quantity,
+      };
+
+      Order.create(data).then(({ data }) => {
+        console.log(data);
+      })
+      .catch(response => console.log(response));
+    },
+    [item, userId],
+  );
 
   if(item == null) {
     return <Redirect to="/" />
@@ -37,7 +57,7 @@ const Checkout = ({ location }) => {
   return (
     <PageTemplate card>
       <div className="checkout-view">
-        <h1 className="display-4">Estás comprando {item.quantity === 1 ? "un" :`${item.quantity} unidades de`} {item.title}...</h1>
+        <h1 className="display-4">Estás comprando {item.quantity === 1 ? "un" :`${item.quantity} unidades de`} {item.name}...</h1>
       </div>
     </PageTemplate>
   )

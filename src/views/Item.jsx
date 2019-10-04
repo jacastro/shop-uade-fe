@@ -29,6 +29,8 @@ import PageTemplate from "components/PageTemplate";
 
 import Item from "services/Item";
 import Warranty from "services/Warranty";
+import User from "services/User";
+import { ShopContext } from "context";
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -39,6 +41,7 @@ class ItemView extends React.Component {
       quantity: 1,
       shippingTo: null,
       photos: [],
+      address: [],
       ...item,
     };
   }
@@ -46,20 +49,18 @@ class ItemView extends React.Component {
   componentDidMount() {
     Item.byId(this.state.id).then(({ data }) => {
       this.setState({ ...data })
+    });
+    User.listAddress(this.context.userId).then(({ data }) => {
+      this.setState({ address: data })
     })
   }
 
   render() {
-    const { id, name, price, description, quantity, photos, shippingTo, category, warranty } = this.state;
+    const { id, name, price, description, quantity, photos, shippingTo, category, warranty, address } = this.state;
     const quantityAvailable = [];
-    const adressAvailable = [];
 
     for (let index = 1; index < 10; index++) {
       quantityAvailable.push(index);
-    }
-
-    for (let index = 1; index < 5; index++) {
-      adressAvailable.push(index);
     }
 
     return (
@@ -85,12 +86,12 @@ class ItemView extends React.Component {
             <p className="mt-3">{description}</p>
             <UncontrolledDropdown group>
               <DropdownToggle outline caret color="secondary">
-                {shippingTo ? `Quiero que me lo envíen a ${shippingTo}` : "Lo retiro personalmente en el local"}
+                {shippingTo ? `Quiero que me lo envíen a ${shippingTo.street}, ${shippingTo.city}, ${shippingTo.state}` : "Lo retiro personalmente en el local"}
               </DropdownToggle>
               <DropdownMenu>
-                {adressAvailable.map(adress => (
-                  <DropdownItem onClick={() => this.setState({ shippingTo: adress })}>
-                    Quiero que me lo envíen a {adress}
+                {address.map(({ street, city, state, id }) => (
+                  <DropdownItem onClick={() => this.setState({ shippingTo: { street, city, state, id } })}>
+                    Quiero que me lo envíen a {street}, {city}, {state}
                   </DropdownItem>
                 ))}
                 <DropdownItem onClick={() => this.setState({ shippingTo: null })}>
@@ -129,5 +130,7 @@ class ItemView extends React.Component {
     );
   }
 }
+
+ItemView.contextType = ShopContext;
 
 export default ItemView;

@@ -8,12 +8,20 @@ class User {
     });
 
     try {
-      await get(`/user/${ssoData.data.id}`);
+      await get(`/users/${ssoData.data.id}`);
     } catch (error) {
-      post(`/user?id=${ssoData.data.id}&name=${ssoData.data.fullName}`);
+      post(`/users?id=${ssoData.data.id}&name=${ssoData.data.fullName}`);
     }
 
     return ssoData;
+  }
+
+  static listAddress(userId) {
+    return get(`/users/${userId}/address`);
+  }
+
+  static createAdress(userId, values) {
+    return post(`/users/${userId}/address`, values);
   }
 }
 

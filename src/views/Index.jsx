@@ -22,7 +22,7 @@ import { Container, Row } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
-import CardsFooter from "components/Footers/CardsFooter.jsx";
+import CardsFooter from "components/Footers/SimpleFooter";
 
 // index page sections
 import Hero from "./IndexSections/Hero.jsx";

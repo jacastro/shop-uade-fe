@@ -144,8 +144,8 @@ const SiteNavbar = (props) => {
                         Publicar un producto
                       </DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem to="/landing-page" tag={Link}>
-                        Mi perfil
+                      <DropdownItem to="/profile/address" tag={Link}>
+                        Mis direcciones
                       </DropdownItem>
                       <DropdownItem to="/profile-page" tag={Link}>
                         Mis compras
