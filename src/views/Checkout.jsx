@@ -15,14 +15,11 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 // reactstrap components
-import { Spinner, Card, Container, Row, Col, DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown } from "reactstrap";
+import { Button } from "reactstrap";
 
 // core components
 import PageTemplate from "components/PageTemplate";
@@ -32,6 +29,7 @@ import Order from "services/Order";
 const Checkout = ({ location }) => {
   const item = location.state;
   const { userId } = useContext(ShopContext);
+  const [result, setResult] = useState(null)
 
   useEffect(
     () => {
@@ -43,8 +41,8 @@ const Checkout = ({ location }) => {
       };
 
       Order.create(data).then(({ data }) => {
-        console.log(data);
-      })
+        setResult(data)
+      }) 
       .catch(response => console.log(response));
     },
     [item, userId],
@@ -57,7 +55,19 @@ const Checkout = ({ location }) => {
   return (
     <PageTemplate card>
       <div className="checkout-view">
-        <h1 className="display-4">Estás comprando {item.quantity === 1 ? "un" :`${item.quantity} unidades de`} {item.name}...</h1>
+        {result ? (
+          <React.Fragment>
+            <i className="icon ni ni-check-bold" style={{ fontSize: '4em', color: '#2dce89' }} />
+            <h1 className="display-2">¡Felicitaciones!</h1>
+            <h1 className="display-4">{item.quantity === 1 ? `El ${item.name} ya es tuyo.` :`Los ${item.quantity} ${item.name} ya son tuyos.`}</h1>
+            <Button className="mt-5" color="primary" to="/profile/orders" tag={Link}>
+              Ver en mis compras
+            </Button>
+          </React.Fragment>
+        ) : (
+          <h1 className="display-4">Estás comprando {item.quantity === 1 ? "un" :`${item.quantity} unidades de`} {item.name}...</h1>
+        )}
+        
       </div>
     </PageTemplate>
   )

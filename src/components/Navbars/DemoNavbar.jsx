@@ -147,10 +147,10 @@ const SiteNavbar = (props) => {
                       <DropdownItem to="/profile/address" tag={Link}>
                         Mis direcciones
                       </DropdownItem>
-                      <DropdownItem to="/profile-page" tag={Link}>
+                      <DropdownItem to="/profile/orders" tag={Link}>
                         Mis compras
                       </DropdownItem>
-                      <DropdownItem to="/login-page" tag={Link}>
+                      <DropdownItem to="/profile/sells" tag={Link}>
                         Mis ventas
                       </DropdownItem>
                       <DropdownItem to="/profile/items" tag={Link}>

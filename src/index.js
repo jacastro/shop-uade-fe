@@ -33,6 +33,8 @@ import Checkout from "views/Checkout";
 import Publish from "views/Publish";
 import MyItems from "views/MyItems";
 import AddressView from "views/Address";
+import MyOrders from "views/MyOrders";
+import MySells from "views/MySells";
 
 ReactDOM.render(
   <ContextProvider>
@@ -57,6 +59,16 @@ ReactDOM.render(
           path="/profile/address"
           exact
           render={props => <AddressView {...props} />}
+        />
+        <Route
+          path="/profile/orders"
+          exact
+          render={props => <MyOrders {...props} />}
+        />
+        <Route
+          path="/profile/sells"
+          exact
+          render={props => <MySells {...props} />}
         />
         <Route
           path="/profile"
