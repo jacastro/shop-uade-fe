@@ -76,7 +76,7 @@ class ItemView extends React.Component {
           <Col xs="11" lg="5" className="item-view_detail">
             <span>ID #{id}</span>
             <h2>{name}</h2>
-            <h1 className="display-1">$ {price}{shippingTo && <small> + $350</small>}</h1>
+            <h1 className="display-1">$ {price}</h1>
             <Badge tag={Link} to={`/category/${category}`} color="primary" pill className="mr-1">
               {category}
             </Badge>
