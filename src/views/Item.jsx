@@ -84,46 +84,52 @@ class ItemView extends React.Component {
               {Warranty.getName(warranty)}
             </Badge>
             <p className="mt-3">{description}</p>
-            <UncontrolledDropdown group>
-              <DropdownToggle outline caret color="secondary">
-                {shippingTo ? `Quiero que me lo envíen a ${shippingTo.street}, ${shippingTo.city}, ${shippingTo.state}` : "Lo retiro personalmente en el local"}
-              </DropdownToggle>
-              <DropdownMenu>
-                {address.map(({ street, city, state, id }) => (
-                  <DropdownItem onClick={() => this.setState({ shippingTo: { street, city, state, id } })}>
-                    Quiero que me lo envíen a {street}, {city}, {state}
-                  </DropdownItem>
-                ))}
-                <DropdownItem onClick={() => this.setState({ shippingTo: null })}>
-                  Lo retiro personalmente en el local
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-            <br /><br />
-            <UncontrolledDropdown group>
-              <DropdownToggle outline size="lg" caret color="default">
-                Necesito {quantity} {quantity === 1 ? "unidad" : "unidades"}
-              </DropdownToggle>
-              <DropdownMenu>
-                {quantityAvailable.map(newQuantity => (
-                  <DropdownItem onClick={() => this.setState({ quantity: newQuantity })}>
-                    Necesito {newQuantity} {newQuantity === 1 ? "unidad" : "unidades"}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </UncontrolledDropdown>
-            <Button 
-              color="success"
-              size="lg"
-              className="buy"
-              to={{
-                pathname:`/checkout`,
-                state: {...this.state},
-              }}
-              tag={Link}
-            >
-              Comprar ahora
-            </Button>
+            {this.context.user ? (
+              <React.Fragment>
+                <UncontrolledDropdown group>
+                  <DropdownToggle outline caret color="secondary">
+                    {shippingTo ? `Quiero que me lo envíen a ${shippingTo.street}, ${shippingTo.city}, ${shippingTo.state}` : "Lo retiro personalmente en el local"}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {address.map(({ street, city, state, id }) => (
+                      <DropdownItem onClick={() => this.setState({ shippingTo: { street, city, state, id } })}>
+                        Quiero que me lo envíen a {street}, {city}, {state}
+                      </DropdownItem>
+                    ))}
+                    <DropdownItem onClick={() => this.setState({ shippingTo: null })}>
+                      Lo retiro personalmente en el local
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <br /><br />
+                <UncontrolledDropdown group>
+                  <DropdownToggle outline size="lg" caret color="default">
+                    Necesito {quantity} {quantity === 1 ? "unidad" : "unidades"}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {quantityAvailable.map(newQuantity => (
+                      <DropdownItem onClick={() => this.setState({ quantity: newQuantity })}>
+                        Necesito {newQuantity} {newQuantity === 1 ? "unidad" : "unidades"}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <Button 
+                  color="success"
+                  size="lg"
+                  className="buy"
+                  to={{
+                    pathname:`/checkout`,
+                    state: {...this.state},
+                  }}
+                  tag={Link}
+                >
+                  Comprar ahora
+                </Button>
+              </React.Fragment>
+            ) : (
+              <p className="lead text-center mt-5">Inicia sesión para comprar ahora</p>
+            )}
           </Col>
         </Row>
       </PageTemplate>
