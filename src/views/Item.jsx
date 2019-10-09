@@ -66,14 +66,14 @@ class ItemView extends React.Component {
     return (
       <PageTemplate card>
         <Row>
-          <Col xs="7" className="item-view_images">
+          <Col xs="12" lg="7" className="item-view_images">
             <img
               alt="..."
               className="img-fluid"
               src={photos[0]}
             />
           </Col>
-          <Col xs="5" className="item-view_detail">
+          <Col xs="11" lg="5" className="item-view_detail">
             <span>ID #{id}</span>
             <h2>{name}</h2>
             <h1 className="display-1">$ {price}{shippingTo && <small> + $350</small>}</h1>

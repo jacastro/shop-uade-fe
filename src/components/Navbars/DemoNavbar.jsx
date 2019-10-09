@@ -164,7 +164,7 @@ const SiteNavbar = (props) => {
                   </UncontrolledDropdown>
                 ) : (
                   userId == null &&
-                  <NavItem className="d-none d-lg-block ml-lg-4">
+                  <NavItem className="d-lg-block ml-lg-4">
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
