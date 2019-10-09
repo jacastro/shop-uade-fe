@@ -77,6 +77,12 @@ const AddressView = () => {
     setPublishing(true)
     User.createAdress(userId, values).then(response => {
       setPublishing(false);
+      const newAddressList = addressList.map(address => address.id === values.id ? values : address);
+      setAddressList(newAddressList);
+    }).catch(response => {
+      setPublishing(false);
+      const newAddressList = addressList.map(address => address.id === values.id ? values : address);
+      setAddressList(newAddressList);
     })
   }
 

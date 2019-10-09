@@ -12,10 +12,14 @@
     p {
       white-space: pre;
     }
-    
+
     .buy {
       float: right;
       padding: 0.875rem 4rem
+    }
+
+    .dropdown-toggle {
+      white-space: normal;
     }
   }
 }
