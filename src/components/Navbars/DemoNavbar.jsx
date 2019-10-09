@@ -53,7 +53,7 @@ const SiteNavbar = (props) => {
       let headroom = new Headroom(document.getElementById("navbar-main"));
       headroom.init();
       Category.list().then(({ data }) => {
-        setCategories(data);
+        setCategories(data.filter(cat => cat.substring(0, 3) !== 'CAT'));
       });
     },
     [],

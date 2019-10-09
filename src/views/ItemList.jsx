@@ -78,13 +78,12 @@ class ItemList extends React.Component {
         <Row>
           {items.map(item => {
             return (
-              <Col xs="3" className="item-list_card">
+              <Col xs="12" lg="4" className="item-list_card">
                 <Card className="card-lift--hover shadow border-0 mb-4">
-                  <CardBody>
+                  <CardBody className="text-center">
                     <img
-                      style={{ height: "300px" }}
+                      style={{ height: "300px", maxWidth: '100%', objectFit: 'contain' }}
                       alt="..."
-                      className="img-fluid"
                       src={item.photos[0]}
                     />
                     <h6 className="text-primary text-uppercase">
