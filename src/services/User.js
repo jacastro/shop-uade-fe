@@ -10,7 +10,7 @@ class User {
     try {
       await get(`/users/${ssoData.data.id}`);
     } catch (error) {
-      post(`/users?id=${ssoData.data.id}&name=${ssoData.data.fullName}`);
+      post(`/users?id=${ssoData.data.id}&name=${ssoData.data.fullName}&email=${ssoData.data.email}`);
     }
 
     return ssoData;

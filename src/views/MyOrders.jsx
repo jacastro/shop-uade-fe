@@ -21,14 +21,11 @@ import { Link } from "react-router-dom";
 // reactstrap components
 import { 
   Button,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
   Media,
-  Progress,
   Table,
-  UncontrolledTooltip
+  Badge,
+  Input,
+  Modal,
 } from "reactstrap";
 
 // core components
@@ -37,9 +34,10 @@ import { ShopContext } from "context";
 import Order from "services/Order";
 
 const MyOrders = () => {
-  const { userId } = useContext(ShopContext);
+  const { userId, user } = useContext(ShopContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [claim, setClaim] = useState(null);
 
   useEffect(
     () => {
@@ -51,6 +49,39 @@ const MyOrders = () => {
     [],
   );
 
+  const openClaim = (order) => {
+    setClaim({
+      order,
+      descripcion: '',
+    });
+  };
+
+  const changeDescription = (value) => {
+    setClaim({
+      ...claim,
+      descripcion: value,
+    })
+  }
+
+  const sendClaim = () => {
+    setClaim({
+      ...claim,
+      loading: true,
+    });
+    Order.addClaim(claim.order.id, claim.descripcion).then(({ data }) => {
+      console.log(data);
+      setClaim({
+        ...claim,
+        loading: false,
+        success: true,
+      });
+      setTimeout(() => {
+        setClaim(null);
+      }, 2000);
+    });
+  }
+
+  console.log(claim);
   return (
     <PageTemplate card>
       <div className="pt-3 p-5">
@@ -62,6 +93,7 @@ const MyOrders = () => {
               <th scope="col">Cantidad</th>
               <th scope="col">Precio total</th>
               <th scope="col">Envío</th>
+              <th scope="col">Reclamo</th>
             </tr>
           </thead>
           <tbody>
@@ -90,7 +122,24 @@ const MyOrders = () => {
                   </td>
                   <td>{order.quantity}</td>
                   <td>$ {order.total}</td>
-                  <td>{order.address ? order.address.street : 'Retiro en local'}</td>
+                  <td>{order.address ? (
+                    <React.Fragment>
+                      {order.address.street}
+                      <br />
+                      <Badge color="primary" pill>
+                        Preparando envío
+                      </Badge>
+                    </React.Fragment>
+                   ) : 'Retiro en local'}</td>
+                  <td className="text-right">
+                    <Button
+                      color="secondary"
+                      size="sm"
+                      onClick={() => openClaim(order)}
+                    >
+                      Crear reclamo
+                    </Button>
+                  </td>
                 </tr>
               );
             })}
@@ -98,6 +147,73 @@ const MyOrders = () => {
         </Table>
         {loading && <p className="text-center mt-3">Estamos buscando tus compras...</p>}
         {!loading && orders.length === 0 && <p className="text-center mt-3">Aún no tenés compras</p>}
+        <Modal
+          className={`modal-dialog-centered ${claim && claim.success && 'modal-success'}`}
+          contentClassName={claim && claim.success && 'bg-gradient-success'}
+          size="sm"
+          isOpen={claim != null}
+        >
+          {claim == null || claim.loading || claim.success ? (
+            <div className="modal-body">
+              {claim && claim.success && (
+                <div className="text-center">
+                  <i className="ni ni-check-bold ni-3x" />
+                  <h3 className="heading mt-4">
+                    Tu reclamo fue creado correctamente
+                  </h3>
+                  <h3 className="heading mb-4">
+                    Identificación #123
+                  </h3>
+                </div>
+              )}
+              {claim && claim.loading && (
+                <div className="text-center">
+                  <h3 className="heading my-4">Estamos creando tu reclamo...</h3>
+                </div>
+              )}
+            </div>
+          ) : (
+            <React.Fragment>
+              <div className="modal-header">
+                <h6 className="modal-title" id="modal-title-default">
+                  Crear un reclamo para tu compra de {claim.order.item.name}
+                </h6>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="modal"
+                  type="button"
+                  onClick={() => setClaim(null)}
+                >
+                  <span aria-hidden={true}>×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <Input
+                  id="exampleFormControlTextarea1"
+                  placeholder="Escriba aquí el motivo de su reclamo"
+                  rows="3"
+                  type="textarea"
+                  onChange={e => changeDescription(e.target.value)}
+                />
+              </div>
+              <div className="modal-footer">
+                <Button color="primary" type="button" onClick={() => sendClaim()}>
+                  Crear reclamo
+                </Button>
+                <Button
+                  className="ml-auto"
+                  color="link"
+                  data-dismiss="modal"
+                  type="button"
+                  onClick={() => setClaim(null)}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
+        </Modal>
       </div>
     </PageTemplate>
   )

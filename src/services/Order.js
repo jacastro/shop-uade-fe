@@ -44,6 +44,10 @@ class Order {
   static edit(values) {
     return put('/orders/', values);
   }
+
+  static addClaim(orderId, description) {
+    return put(`/orders/${orderId}/claim`, description);
+  }
 }
 
 export default Order;
