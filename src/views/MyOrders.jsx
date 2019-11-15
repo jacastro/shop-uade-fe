@@ -38,6 +38,7 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [claim, setClaim] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(
     () => {
@@ -52,14 +53,18 @@ const MyOrders = () => {
   const openClaim = (order) => {
     setClaim({
       order,
-      descripcion: '',
+      description: '',
     });
+  };
+
+  const viewClaim = (order) => {
+    setSelectedOrder(order);
   };
 
   const changeDescription = (value) => {
     setClaim({
       ...claim,
-      descripcion: value,
+      description: value,
     })
   }
 
@@ -68,7 +73,7 @@ const MyOrders = () => {
       ...claim,
       loading: true,
     });
-    Order.addClaim(claim.order.id, claim.descripcion).then(({ data }) => {
+    Order.addClaim(claim.order.id, claim.description).then(({ data }) => {
       console.log(data);
       setClaim({
         ...claim,
@@ -126,19 +131,21 @@ const MyOrders = () => {
                     <React.Fragment>
                       {order.address.street}
                       <br />
-                      <Badge color="primary" pill>
-                        Preparando envío
+                      <Badge color={Order.getColor(order.state)} pill>
+                        {order.state}
                       </Badge>
                     </React.Fragment>
                    ) : 'Retiro en local'}</td>
                   <td className="text-right">
-                    <Button
-                      color="secondary"
-                      size="sm"
-                      onClick={() => openClaim(order)}
-                    >
-                      Crear reclamo
-                    </Button>
+                    {order.claim != null ? (
+                      <Button color="secondary" size="sm" onClick={() => viewClaim(order)}>
+                        Ver reclamo
+                      </Button>
+                    ) : (
+                      <Button color="secondary" size="sm" onClick={() => openClaim(order)}>
+                        Crear reclamo
+                      </Button>
+                    )}
                   </td>
                 </tr>
               );
@@ -210,6 +217,34 @@ const MyOrders = () => {
                 >
                   Cancelar
                 </Button>
+              </div>
+            </React.Fragment>
+          )}
+        </Modal>
+        <Modal
+          className="modal-dialog-centered"
+          size="sm"
+          isOpen={selectedOrder != null}
+          toggle={() => setSelectedOrder(null)}
+        >
+          {selectedOrder != null && (
+            <React.Fragment>
+              <div className="modal-header">
+                <h6 className="modal-title" id="modal-title-default">
+                  Ver el reclamo para tu compra de {selectedOrder.item.name}
+                </h6>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  data-dismiss="modal"
+                  type="button"
+                  onClick={() => setClaim(null)}
+                >
+                  <span aria-hidden={true}>×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>{selectedOrder.claim.description}</p>
               </div>
             </React.Fragment>
           )}

@@ -8,7 +8,9 @@ class User {
     });
 
     try {
-      await get(`/users/${ssoData.data.id}`);
+      await get(`/users/me`, null, { 
+        headers: {'Authorization': `Bearer ${token}`}, 
+      });
     } catch (error) {
       post(`/users?id=${ssoData.data.id}&name=${ssoData.data.fullName}&email=${ssoData.data.email}`);
     }
@@ -17,11 +19,11 @@ class User {
   }
 
   static listAddress(userId) {
-    return get(`/users/${userId}/address`);
+    return get(`/users/address`);
   }
 
   static createAdress(userId, values) {
-    return post(`/users/${userId}/address`, values);
+    return post(`/users/address`, values);
   }
 }
 

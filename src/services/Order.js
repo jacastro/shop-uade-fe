@@ -16,6 +16,10 @@ class Order {
         ...order,
         item: item.data,
         address: addresses.data.find(address => address.id === order.address),
+        state: order.state || 'En preparación',
+        claim: {
+          description: "lalala"
+        }
       }
     }));
     return ordersWithData;
@@ -46,7 +50,17 @@ class Order {
   }
 
   static addClaim(orderId, description) {
-    return put(`/orders/${orderId}/claim`, description);
+    return post(`/orders/${orderId}/claim`, description);
+  }
+
+  static getColor(status) {
+    const colorByStatus = {
+      'En preparación': 'primary',
+      'En viaje': 'info',
+      'Entregado': 'success',
+      'No entregado': 'danger'
+    }
+    return colorByStatus[status] ? colorByStatus[status] : 'secondary';
   }
 }
 
