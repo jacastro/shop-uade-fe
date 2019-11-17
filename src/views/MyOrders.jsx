@@ -47,9 +47,6 @@ const MyOrders = () => {
         setOrders(data);
         setLoading(false);
       });
-      Order.getClaim(202).then(({ data }) => {
-        console.log(data);
-      })
     },
     [],
   );
