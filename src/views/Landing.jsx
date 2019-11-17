@@ -136,14 +136,25 @@ const Landing = (props) => {
                         <p className="description mt-3">
                           Contamos con un equipo de soporte las 24hs para ayudarte en lo que necesites.
                         </p>
-                        <Button
-                          className="mt-4"
-                          color="success"
-                          to="/list"
-                          tag={Link}
-                        >
-                          Solicitar soporte
-                        </Button>
+                        {user ? (
+                          <Button
+                            className="mt-4"
+                            color="success"
+                            to="/profile/orders"
+                            tag={Link}
+                          >
+                            Solicitar soporte
+                          </Button>
+                        ) : (
+                          <Button
+                            className="mt-4"
+                            color="success"
+                            onClick={() => SSO.login(`${window.location.href}profile/orders`)}
+                          >
+                            Solicitar soporte
+                          </Button>
+                        )}
+                        
                       </CardBody>
                     </Card>
                   </Col>

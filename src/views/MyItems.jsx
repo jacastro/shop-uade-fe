@@ -52,7 +52,7 @@ const MyItems = () => {
   );
 
   return (
-    <PageTemplate card>
+    <PageTemplate card privatePage>
       <div className="pt-3 p-5">
         <h2>Mis publicaciones</h2>
         <Table className="align-items-center" responsive>

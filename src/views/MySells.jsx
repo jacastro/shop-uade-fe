@@ -19,16 +19,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // reactstrap components
-import { 
-  Button,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
+import {
   Media,
-  Progress,
-  Table,
-  UncontrolledTooltip
+  Badge,
+  Table
 } from "reactstrap";
 
 // core components
@@ -52,7 +46,7 @@ const MySells = () => {
   );
 
   return (
-    <PageTemplate card>
+    <PageTemplate card privatePage>
       <div className="pt-3 p-5">
         <h2>Mis ventas</h2>
         <Table className="align-items-center" responsive>
@@ -90,7 +84,11 @@ const MySells = () => {
                   </td>
                   <td>{order.quantity}</td>
                   <td>$ {order.total}</td>
-                  <td>{order.address ? 'Con envío' : 'Retiro en local'}</td>
+                  <td>{order.address ? (
+                    <Badge color={Order.getColor(order.state)} data-placement="top">
+                      Envío {order.state}
+                    </Badge>
+                   ) : 'Retiro en local'}</td>
                 </tr>
               );
             })}

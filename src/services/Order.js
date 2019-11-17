@@ -16,10 +16,8 @@ class Order {
         ...order,
         item: item.data,
         address: addresses.data.find(address => address.id === order.address),
-        state: order.state || 'En preparación',
-        claim: {
-          description: "lalala"
-        }
+        state: order.shippingStatus || 'En preparación',
+        claim: order.claims == null ? null : order.claims[0],
       }
     }));
     return ordersWithData;
@@ -51,6 +49,10 @@ class Order {
 
   static addClaim(orderId, description) {
     return post(`/orders/${orderId}/claim`, description);
+  }
+
+  static getClaim(orderId) {
+    return get(`/orders/${orderId}/claim`);
   }
 
   static getColor(status) {

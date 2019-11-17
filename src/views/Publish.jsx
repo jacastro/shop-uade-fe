@@ -35,6 +35,7 @@ import Category from "services/Category";
 import Warranty from "services/Warranty";
 import Item from "services/Item";
 import { ShopContext } from "context";
+import User from "services/User";
 
 const Publish = ({ location }) => {
   const originalItem = location.state;
@@ -55,6 +56,7 @@ const Publish = ({ location }) => {
   const [warranties, setWarranties] = useState([]);
   const [publishing, setPublishing] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [address, setAddress] = useState(null);
 
   const changeValue = (key, value) => {
     setValues({
@@ -87,12 +89,38 @@ const Publish = ({ location }) => {
       Warranty.list().then(({ data }) => {
         setWarranties(data);
       });
+      User.listAddress().then(({ data }) => {
+        setAddress(data);
+      });
     },
     [],
   );
 
   if(redirect) {
     return <Redirect to="/profile/items" />
+  }
+
+  if(address == null) {
+    return (
+      <PageTemplate card>
+        <div className="pt-3 p-5">
+          <h2>{originalItem ? 'Preparando para editar tu publicacion...' : 'Preparando para publicar un producto...'}</h2>
+        </div>
+      </PageTemplate>
+    )
+  }
+
+  if(address != null && address.length < 1) {
+    return (
+      <PageTemplate card privatePage>
+        <div className="checkout-view">
+          <h1 className="display-4">Para publicar un producto es necesario que agregues una dirección a tu perfil.</h1>
+          <Button className="mt-5" color="primary" to="/profile/address" tag={Link}>
+            Agregar una dirección
+          </Button>
+        </div>
+      </PageTemplate>
+    )
   }
 
   return (

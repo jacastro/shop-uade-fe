@@ -63,7 +63,6 @@ $table-dark-head-color:       lighten(theme-color("default"), 35%) !default;
   td,
   th {
       font-size: $table-body-font-size;
-      white-space: nowrap;
   }
 
 

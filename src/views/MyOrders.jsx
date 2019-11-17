@@ -26,6 +26,7 @@ import {
   Badge,
   Input,
   Modal,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 // core components
@@ -46,6 +47,9 @@ const MyOrders = () => {
         setOrders(data);
         setLoading(false);
       });
+      Order.getClaim(202).then(({ data }) => {
+        console.log(data);
+      })
     },
     [],
   );
@@ -74,21 +78,25 @@ const MyOrders = () => {
       loading: true,
     });
     Order.addClaim(claim.order.id, claim.description).then(({ data }) => {
-      console.log(data);
-      setClaim({
-        ...claim,
-        loading: false,
-        success: true,
-      });
-      setTimeout(() => {
-        setClaim(null);
-      }, 2000);
+      Order.getClaim(claim.order.id).then(({ data }) => {
+        setClaim({
+          ...claim,
+          loading: false,
+          success: true,
+          id: data[0].id
+        });
+        setOrders(
+          orders.map(order => order.id === claim.order.id ? { ...order, claim: data[0] } : order)
+        )
+        setTimeout(() => {
+          setClaim(null);
+        }, 2000);
+      })
     });
   }
 
-  console.log(claim);
   return (
-    <PageTemplate card>
+    <PageTemplate card privatePage>
       <div className="pt-3 p-5">
         <h2>Mis compras</h2>
         <Table className="align-items-center" responsive>
@@ -129,20 +137,25 @@ const MyOrders = () => {
                   <td>$ {order.total}</td>
                   <td>{order.address ? (
                     <React.Fragment>
-                      {order.address.street}
-                      <br />
-                      <Badge color={Order.getColor(order.state)} pill>
+                      <Badge color={Order.getColor(order.state)} data-placement="top" id={`tooltip${order.id}`}>
                         {order.state}
                       </Badge>
+                      <UncontrolledTooltip
+                        delay={0}
+                        placement="top"
+                        target={`tooltip${order.id}`}
+                      >
+                        Enviado a {order.address.street}, {order.address.city}, {order.address.state}
+                      </UncontrolledTooltip>
                     </React.Fragment>
                    ) : 'Retiro en local'}</td>
                   <td className="text-right">
                     {order.claim != null ? (
-                      <Button color="secondary" size="sm" onClick={() => viewClaim(order)}>
-                        Ver reclamo
+                      <Button color="info" size="sm" onClick={() => viewClaim(order)}>
+                        Reclamo {order.claim.statusList.value}
                       </Button>
                     ) : (
-                      <Button color="secondary" size="sm" onClick={() => openClaim(order)}>
+                      <Button color="primary" size="sm" onClick={() => openClaim(order)}>
                         Crear reclamo
                       </Button>
                     )}
@@ -169,7 +182,7 @@ const MyOrders = () => {
                     Tu reclamo fue creado correctamente
                   </h3>
                   <h3 className="heading mb-4">
-                    Identificación #123
+                    Identificación {claim.id}
                   </h3>
                 </div>
               )}
@@ -245,6 +258,12 @@ const MyOrders = () => {
               </div>
               <div className="modal-body">
                 <p>{selectedOrder.claim.description}</p>
+                <Badge color="primary" pill className="mr-1">
+                  Estado: {selectedOrder.claim.statusList.value}
+                </Badge>
+                <Badge color="info" pill className="mr-1">
+                  Identificación: {selectedOrder.claim.id}
+                </Badge>
               </div>
             </React.Fragment>
           )}

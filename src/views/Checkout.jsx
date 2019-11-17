@@ -53,7 +53,7 @@ const Checkout = ({ location }) => {
   }
 
   return (
-    <PageTemplate card>
+    <PageTemplate card privatePage>
       <div className="checkout-view">
         {result ? (
           <React.Fragment>

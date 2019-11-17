@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import { Redirect } from "react-router-dom";
+import SSOAuth from "lib/sso";
 
 // reactstrap components
 import { Button, Card, Container, Row, Col } from "reactstrap";
@@ -23,6 +25,7 @@ import { Button, Card, Container, Row, Col } from "reactstrap";
 // core components
 import DemoNavbar from "./Navbars/DemoNavbar";
 import SimpleFooter from "./Footers/SimpleFooter.jsx";
+import { ShopContext } from "context";
 
 class PageTemplate extends React.Component {
   componentDidMount() {
@@ -31,10 +34,17 @@ class PageTemplate extends React.Component {
     this.refs.main.scrollTop = 0;
   }
   render() {
-    const { card, children, title } = this.props;
+    const { card, children, title, privatePage = false } = this.props;
 
     return (
       <React.Fragment>
+        <ShopContext.Consumer>
+          {({ userId }) => {
+            if(privatePage && userId == null) {
+              return <Redirect to="/" />
+            }
+          }}
+        </ShopContext.Consumer>
         <DemoNavbar />
         <main className="profile-page" ref="main">
           <section className={`${card ? 'section-profile-cover ' : ''}section-shaped my-0`}>

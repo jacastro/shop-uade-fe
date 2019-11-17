@@ -96,7 +96,7 @@ const AddressView = () => {
   );
 
   return (
-    <PageTemplate card>
+    <PageTemplate card privatePage>
       <div className="pt-3 p-5">
         <h2>Mis direcciones</h2>
         <UncontrolledDropdown group>
