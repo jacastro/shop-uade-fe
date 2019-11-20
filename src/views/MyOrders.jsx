@@ -145,7 +145,7 @@ const MyOrders = () => {
                         Enviado a {order.address.street}, {order.address.city}, {order.address.state}
                       </UncontrolledTooltip>
                     </React.Fragment>
-                   ) : 'Retiro en local'}</td>
+                   ) : <Badge color="default">Retiro en local</Badge>}</td>
                   <td className="text-right">
                     {order.claim != null ? (
                       <Button color="info" size="sm" onClick={() => viewClaim(order)}>
@@ -248,7 +248,7 @@ const MyOrders = () => {
                   className="close"
                   data-dismiss="modal"
                   type="button"
-                  onClick={() => setClaim(null)}
+                  onClick={() => setSelectedOrder(null)}
                 >
                   <span aria-hidden={true}>×</span>
                 </button>

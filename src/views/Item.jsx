@@ -44,6 +44,7 @@ class ItemView extends React.Component {
       address: [],
       ...item,
     };
+    props.location.state = null;
   }
 
   componentDidMount() {

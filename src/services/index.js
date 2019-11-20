@@ -13,11 +13,14 @@ if(window.location.hash !== '')
     SSO.saveUserToken();
 
 const jwt = SSO.getJWT();
-const headers = {'Authorization': jwt != null ? `Bearer ${SSO.getJWT()}` : undefined };
+const headers = {
+  'Authorization': jwt != null ? `Bearer ${SSO.getJWT()}` : undefined,
+  'Content-Type': 'application/json',
+};
 
 const ok = (response) => response;
 const err = (error) => {
-  if (error.response != null) {
+  if (error.response == null) {
     throw error;
   }
   if (error.response.status === 403 && SSO.getJWT() != null) {
