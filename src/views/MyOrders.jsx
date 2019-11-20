@@ -99,6 +99,7 @@ const MyOrders = () => {
         <Table className="align-items-center" responsive>
           <thead className="thead-light">
             <tr>
+              <th scope="col">#</th>
               <th scope="col">Item</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Precio total</th>
@@ -110,6 +111,7 @@ const MyOrders = () => {
             {orders.map(order => {
               return (
                 <tr>
+                  <td>{order.id}</td>
                   <td>
                     <Media className="align-items-center">
                       <Link
