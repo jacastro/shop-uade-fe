@@ -115,7 +115,16 @@ const Publish = ({ location }) => {
       <PageTemplate card privatePage>
         <div className="checkout-view">
           <h1 className="display-4">Para publicar un producto es necesario que agregues una dirección a tu perfil.</h1>
-          <Button className="mt-5" color="primary" to="/profile/address" tag={Link}>
+          <Button 
+            className="mt-5"
+            color="primary" to={{
+              pathname: "/profile/address",
+              state: {
+                go: '/publish'
+              },
+            }} 
+            tag={Link}
+          >
             Agregar una dirección
           </Button>
         </div>

@@ -26,7 +26,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  Alert
 } from "reactstrap";
 
 // core components
@@ -35,7 +36,7 @@ import Item from "services/Item";
 import { ShopContext } from "context";
 import User from "services/User";
 
-const AddressView = () => {
+const AddressView = (props) => {
   const { userId } = useContext(ShopContext);
   const [values, setValues] = useState({
     street: '',
@@ -46,6 +47,9 @@ const AddressView = () => {
   const [publishing, setPublishing] = useState(false);
   const [editing, setEditing] = useState(null);
   const [addressList, setAddressList] = useState([]);
+  const [visible, setVisible] = useState(false);
+
+  const { go } = props.location.state || {};
 
   const changeValue = (key, value) => {
     setValues({
@@ -57,11 +61,13 @@ const AddressView = () => {
   const selectAddress = ({ street, city, state, id, zipCode }) => {
     setEditing(id);
     setValues({ street, city, state, zipCode, id });
+    setVisible(false);
   }
 
   const unselectAddress = () => {
     setEditing(null);
     setValues({ street: '', zipCode: '', state: '', city: '' });
+    setVisible(false);
   }
 
   const onCreate = () => {
@@ -69,12 +75,15 @@ const AddressView = () => {
     User.createAdress(userId, values).then(response => {
       setPublishing(false);
       setAddressList([ ...addressList, values]);
+      setValues({ street: '', zipCode: '', state: '', city: '' });
+      setVisible(true);
       console.log(response);
     })
   }
 
   const onEdit = () => {
-    setPublishing(true)
+    setPublishing(true);
+    setVisible(false);
     User.createAdress(userId, values).then(response => {
       setPublishing(false);
       const newAddressList = addressList.map(address => address.id === values.id ? values : address);
@@ -95,13 +104,17 @@ const AddressView = () => {
     [],
   );
 
+  if(visible && go != null) {
+    return <Redirect to={go} />
+  }
+
   return (
     <PageTemplate card privatePage>
       <div className="pt-3 p-5">
         <h2>Mis direcciones</h2>
         <UncontrolledDropdown group>
           <DropdownToggle caret color="default">
-            Agregar nueva dirección
+            {editing ? 'Editar una dirección' : 'Agregar nueva dirección'}
           </DropdownToggle>
           <DropdownMenu>
             {addressList.map(address => (
@@ -149,15 +162,20 @@ const AddressView = () => {
           />
         </FormGroup>
         <br />
-        <br />
-        {editing ? (
-          <Button color="primary" type="button" disabled={publishing} onClick={() => onEdit()}>
-            {publishing ? 'Guardando...' : 'Confirmar cambios'}
-          </Button>
+        {visible ? (
+          <Alert color="success" isOpen={visible} toggle={() => setVisible(false)}>
+            La dirección fue {editing ? 'modificada' : 'agregada'} con éxito.
+          </Alert>
         ) : (
-          <Button color="primary" type="button" disabled={publishing} onClick={() => onCreate()}>
-            {publishing ? 'Guardando...' : 'Crear nueva dirección'}
-          </Button>
+          editing ? (
+            <Button color="primary" type="button" disabled={publishing} onClick={() => onEdit()}>
+              {publishing ? 'Guardando...' : 'Confirmar cambios'}
+            </Button>
+          ) : (
+            <Button color="primary" type="button" disabled={publishing} onClick={() => onCreate()}>
+              {publishing ? 'Guardando...' : 'Crear nueva dirección'}
+            </Button>
+          )
         )}
       </div>
     </PageTemplate>
